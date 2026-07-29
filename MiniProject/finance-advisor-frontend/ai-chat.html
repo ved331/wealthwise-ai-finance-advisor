@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Advisor - FinAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div id="loader-placeholder"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar placeholder -->
+        <div id="sidebar-placeholder"></div>
+
+        <main class="main-content">
+            <div class="dashboard-header mb-4">
+                <div>
+                    <h1>AI Finance Advisor</h1>
+                    <p>Ask anything about your finances, markets, or strategies.</p>
+                </div>
+            </div>
+
+            <div class="chat-container animate-fade-in delay-100">
+                <div class="chat-header">
+                    <div class="ai-avatar">🤖</div>
+                    <div>
+                        <h3>FinAI Assistant</h3>
+                        <p>Online</p>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">
+                        Hello John! I'm your FinAI Advisor. I've analyzed your recent transactions. How can I help you today?
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions" id="chat-suggestions" style="padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="chip-btn" onclick="sendQuickPrompt('Give me live market suggestions')">📈 Live Market Suggestions</button>
+                    <button class="chip-btn" onclick="sendQuickPrompt('How can I optimize my monthly savings?')">💡 Optimize Savings</button>
+                    <button class="chip-btn" onclick="sendQuickPrompt('What is the best investment for moderate risk?')">🛡️ Investment Strategy</button>
+                </div>
+
+                <div class="chat-input-area">
+                    <form id="chat-form" class="chat-form">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Type your message here..." autocomplete="off">
+                        <button type="submit" class="chat-submit">➤</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
+

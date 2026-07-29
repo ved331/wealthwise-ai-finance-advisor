@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinAI - Intelligent Finance Advisor</title>
+    <meta name="description" content="Your AI-powered personal finance advisor. Manage, track, and grow your wealth.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            padding-bottom: 80px;
+        }
+
+        .feature-card {
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader-placeholder"></div>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg-glow"></div>
+            <div class="container animate-fade-in">
+                <h1>Smart Wealth Management,<br>Powered by <span class="text-gradient">AI</span></h1>
+                <p>Unlock personalized financial advice, automated portfolio tracking, and intelligent market insights
+                    tailored just for you.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="signup.html" class="btn btn-primary">Start</a>
+                    <a href="#features" class="btn btn-glass">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="container">
+            <div class="features-grid">
+                <div class="feature-card glass-panel animate-fade-in delay-100">
+                    <span class="feature-icon">📊</span>
+                    <h3 class="mb-3">Automated Tracking</h3>
+                    <p>Connect your accounts and let FinAI track every penny in real-time. No manual entry required.</p>
+                </div>
+                <div class="feature-card glass-panel animate-fade-in delay-200">
+                    <span class="feature-icon">🤖</span>
+                    <h3 class="mb-3">AI Advisor 24/7</h3>
+                    <p>Ask anything. Get actionable insights, tax strategies, and investment tips instantly from our
+                        advanced AI.</p>
+                </div>
+                <div class="feature-card glass-panel animate-fade-in delay-300">
+                    <span class="feature-icon">📈</span>
+                    <h3 class="mb-3">Predictive Insights</h3>
+                    <p>Our machine learning models forecast your financial future to help you make smarter decisions
+                        today.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="config/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

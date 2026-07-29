@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealthwise Plan - FinAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/wealth-plan.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+</head>
+<body>
+    <div id="loader-placeholder"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar placeholder -->
+        <div id="sidebar-placeholder"></div>
+
+        <main class="main-content">
+            <div class="dashboard-header mb-4">
+                <div>
+                    <h1>Wealthwise AI Financial Advisor</h1>
+                    <p>Encrypted & Anonymous. Build your personalized investment strategy.</p>
+                </div>
+            </div>
+
+            <!-- ── INPUT CARD ── -->
+            <div class="card a1">
+                <div class="sl">Your Profile</div>
+            
+                <div class="fg">
+                    <div class="field">
+                        <label>Monthly Income</label>
+                        <select id="income">
+                        <option value="15000">₹10,000 – ₹20,000</option>
+                        <option value="25000" selected>₹20,000 – ₹30,000</option>
+                        <option value="40000">₹30,000 – ₹50,000</option>
+                        <option value="65000">₹50,000 – ₹80,000</option>
+                        <option value="100000">₹80,000 and above</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Monthly Expenses</label>
+                        <select id="expenses">
+                        <option value="8000">₹5,000 – ₹10,000</option>
+                        <option value="15000" selected>₹10,000 – ₹20,000</option>
+                        <option value="25000">₹20,000 – ₹30,000</option>
+                        <option value="40000">₹30,000 – ₹40,000</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="fg">
+                    <div class="field">
+                        <label>Financial Goal</label>
+                        <select id="goal">
+                        <option value="car">Buy a Car</option>
+                        <option value="house">Buy a House</option>
+                        <option value="education">Education</option>
+                        <option value="retirement">Retirement</option>
+                        <option value="emergency">Emergency Fund</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Risk Appetite</label>
+                        <select id="risk">
+                        <option value="low">Conservative — Safety First</option>
+                        <option value="med" selected>Moderate — Balanced</option>
+                        <option value="high">Aggressive — High Growth</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- REAL-TIME DATA IMPORT -->
+                <div class="sl" style="margin-top: 1rem;">Custom Asset (Live API)</div>
+                <div class="fg">
+                    <div class="field">
+                        <label>Asset Type</label>
+                        <select id="customType" onchange="updateCustomLabels()">
+                        <option value="none">None (Use default portfolio)</option>
+                        <option value="mf">Equity Mutual Fund (Scheme Code)</option>
+                        <option value="debt">Debt Mutual Fund (Scheme Code)</option>
+                        <option value="liquid">Liquid Mutual Fund (Scheme Code)</option>
+                        <option value="stock">Stock (Yahoo Ticker)</option>
+                        <option value="fd">Fixed Deposit (Rate %)</option>
+                        <option value="ppf">PPF / NPS (Rate %)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label id="customCodeLabel">Code / Ticker</label>
+                        <input type="text" id="customCode" placeholder="e.g. 122639 or RELIANCE.NS">
+                    </div>
+                </div>
+                <div class="fg">
+                    <div class="field">
+                        <label>Allocation (%)</label>
+                        <input type="number" id="customAlloc" placeholder="e.g. 20" min="1" max="100">
+                    </div>
+                </div>
+
+                <div class="rr">
+                    <div class="rr-top">
+                        <span class="rr-lbl">Investment Horizon</span>
+                        <div>
+                        <span class="rr-val" id="durVal">5</span>
+                        <span style="color: var(--text-muted); margin-left: 5px;">years</span>
+                        </div>
+                    </div>
+                    <input type="range" min="1" max="25" value="5" step="1" id="duration"
+                        oninput="
+                        document.getElementById('durVal').textContent = this.value;
+                        const p = (this.value - 1) / 24 * 100;
+                        this.style.background = 'linear-gradient(90deg, var(--primary-color) ' + p + '%, rgba(255,255,255,0.1) ' + p + '%)';
+                        ">
+                </div>
+            
+                <button class="btn btn-primary" id="analyze-btn" onclick="analyze()" style="width: 100%; font-size: 1.1rem; padding: 15px;">→ Build My Wealth Plan</button>
+            </div>
+
+            <!-- ── RESULTS ── -->
+            <div id="results" class="hidden">
+            
+                <!-- Summary -->
+                <div class="card a1" id="sc">
+                    <div class="sl">Financial Overview</div>
+                    <div id="rp" class="rpill"></div>
+                    <div class="mrow">
+                        <div class="mc"><span class="mc-v" id="mS">—</span><span class="mc-l">Savings / mo</span></div>
+                        <div class="mc"><span class="mc-v" id="mR">—</span><span class="mc-l">Savings Rate</span></div>
+                        <div class="mc"><span class="mc-v" id="mC">—</span><span class="mc-l">Corpus</span></div>
+                        <div class="mc"><span class="mc-v" id="mH">—</span><span class="mc-l">Health Score</span></div>
+                    </div>
+                    <div id="hm"></div>
+                </div>
+            
+                <!-- Allocation donut -->
+                <div class="card a2">
+                    <div class="sl">Portfolio Allocation</div>
+                    <div class="alloc-grid">
+                        <div class="dw">
+                        <canvas id="donut"></canvas>
+                        <div class="dc">
+                            <span class="dc-v">100%</span>
+                            <span class="dc-l">Allocated</span>
+                        </div>
+                        </div>
+                        <div class="legend" id="leg"></div>
+                    </div>
+                </div>
+            
+                <!-- Exact breakdown -->
+                <div class="card a3">
+                    <div class="sl">Exact Investment Breakdown</div>
+                    <div id="bd"></div>
+                </div>
+            
+                <!-- Growth chart -->
+                <div class="card a4">
+                    <div class="sl">Corpus Growth Projection</div>
+                    <div class="lw"><canvas id="lc"></canvas></div>
+                </div>
+            
+                <!-- Goal insight -->
+                <div class="card a5">
+                    <div class="sl">Goal Insight</div>
+                    <div class="insight" id="gi"></div>
+                </div>
+            
+                <!-- Action plan -->
+                <div class="card a6">
+                    <div class="sl">Step-by-Step Action Plan</div>
+                    <div id="ap"></div>
+                </div>
+
+                <!-- Live AI Suggestions -->
+                <div class="card a7" style="margin-top: 20px;">
+                    <div class="sl">Live AI Market Suggestions (Live API)</div>
+                    <div id="live-suggestions-content" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;"></div>
+                </div>
+            </div><!-- /results -->
+
+        </main>
+    </div>
+
+    <script src="config/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wealth-plan.js"></script>
+</body>
+</html>
+

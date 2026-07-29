@@ -1,0 +1,46 @@
+/* Responsive overrides */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .flex-md-row {
+        flex-direction: row;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .glass-panel {
+        padding: 15px;
+    }
+}
+
+@media (min-width: 769px) {
+    .d-md-flex {
+        display: flex;
+    }
+    
+    .flex-md-row {
+        flex-direction: row;
+    }
+
+    .btn {
+        width: auto;
+    }
+}
